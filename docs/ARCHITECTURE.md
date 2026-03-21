@@ -5,6 +5,18 @@ This document traces the download → validation → visualization path that
 `personal-finance/docs/contributor-architecture-blueprint.md`: small, focused
 sections that explain what each layer owns and how an engineer can extend it.
 
+## Visual diagrams
+
+- `docs/diagrams/architecture.puml`: PlantUML source for the core workflow. Run
+  `plantuml docs/diagrams/architecture.puml` to regenerate PNG/SVG renders when
+  the data-flow changes.
+- `docs/diagrams/architecture.drawio`: Draw.io project (zipped XML). Open it in
+  `https://app.diagrams.net` or `drawio` desktop to make tweaks, and export
+  artwork as needed for other documentation.
+
+With both sources in place, contributors can edit whichever tool they prefer
+and use the matching renderer to keep the pictures aligned with the text.
+
 ## Key Components
 
 - `doc_urls.pickle`: cached mapping from dataset descriptions to Zillow CSV
