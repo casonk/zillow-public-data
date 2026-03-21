@@ -1,0 +1,30 @@
+@startuml
+skinparam monochrome true
+skinparam dpi 150
+
+package "Catalog" {
+  [doc_urls.pickle] as doc
+}
+package "Downloader" {
+  [Refresh Script] as entry
+}
+package "Output" {
+  [data/csv corpus]
+  [viz/png corpus]
+}
+package "Expo" {
+  [README preview PNGs]
+}
+
+doc --> entry : reads candidate file map
+entry --> "files.zillowstatic.com" : fetch CSVs
+entry --> "data/csv corpus" : writes sanitized CSVs
+entry --> "viz/png corpus" : renders filtered charts
+"viz/png corpus" --> "README preview PNGs" : copy curated samples
+
+note right of entry
+  Handles resume, latin-1 fallback,
+  and non-numeric tables.
+end note
+
+@enduml
