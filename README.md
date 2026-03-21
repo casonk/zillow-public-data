@@ -62,3 +62,10 @@ regenerate `./viz/`:
   fallback and skip non-numeric outputs automatically.
 - When the README pixels still look stale, re-run `python refresh.py --skip-download
   --skip-viz` to reconfirm the sampled charts reflect the latest `./data/`.
+
+## Tests
+
+- `pytest tests/test_refresh.py` validates the helper utilities used by
+  `refresh.py` (doc map loading, candidate path expansion, date column discovery)
+  without making network calls. Run this after touching `refresh.py` or
+  `doc_urls.pickle` before pushing.
