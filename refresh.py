@@ -10,7 +10,6 @@ from typing import Iterable
 import pandas as pd
 import requests
 
-
 ROOT = Path(__file__).resolve().parent
 DATA_DIR = ROOT / "data"
 VIZ_DIR = ROOT / "viz"
@@ -64,7 +63,9 @@ def is_non_empty_csv(path: Path) -> bool:
     return not df.empty
 
 
-def download_all(doc_urls: dict[str, str], session: requests.Session, resume: bool = False) -> DownloadStats:
+def download_all(
+    doc_urls: dict[str, str], session: requests.Session, resume: bool = False
+) -> DownloadStats:
     stats = DownloadStats()
     timestamp = int(pd.Timestamp.now("UTC").timestamp())
     candidates = list(iter_candidate_paths(doc_urls))
@@ -127,11 +128,62 @@ def prepare_plot_environment() -> None:
 def make_selections() -> dict[str, tuple[list[object], str | None]]:
     return {
         "Metro": (["Ann Arbor, MI", "Detroit, MI"], "MI"),
-        "Zip": ([48374, 48375, 48167, 48335, 48336, 48152, 48240, 48168, 48154, 48239, 48170, 48150], "MI"),
-        "City": (["Plymouth", "Farmington", "Farmington Hills", "Novi", "Livonia", "Northville", "Redford", "Franklin", "Wixom", "Commerce"], "MI"),
-        "County": (["Oakland County", "Wayne County", "Livingston County", "Washtenaw County", "Genesee County"], "MI"),
-        "State": (["Michigan", "Oregon", "Washington", "California", "Colorado", "Utah"], None),
-        "Neighborhood": (["SMB Estates", "Clements Circle", "Coventry Gardens", "Woodbury Park", "Willow Woods"], "MI"),
+        "Zip": (
+            [
+                48374,
+                48375,
+                48167,
+                48335,
+                48336,
+                48152,
+                48240,
+                48168,
+                48154,
+                48239,
+                48170,
+                48150,
+            ],
+            "MI",
+        ),
+        "City": (
+            [
+                "Plymouth",
+                "Farmington",
+                "Farmington Hills",
+                "Novi",
+                "Livonia",
+                "Northville",
+                "Redford",
+                "Franklin",
+                "Wixom",
+                "Commerce",
+            ],
+            "MI",
+        ),
+        "County": (
+            [
+                "Oakland County",
+                "Wayne County",
+                "Livingston County",
+                "Washtenaw County",
+                "Genesee County",
+            ],
+            "MI",
+        ),
+        "State": (
+            ["Michigan", "Oregon", "Washington", "California", "Colorado", "Utah"],
+            None,
+        ),
+        "Neighborhood": (
+            [
+                "SMB Estates",
+                "Clements Circle",
+                "Coventry Gardens",
+                "Woodbury Park",
+                "Willow Woods",
+            ],
+            "MI",
+        ),
     }
 
 
@@ -145,7 +197,11 @@ def plot_all(doc_urls: dict[str, str]) -> int:
 
     for description, original_path in doc_urls.items():
         for geography, (regions, state_name) in selections.items():
-            path = original_path.replace("Metro", geography) if "Metro" in original_path else original_path
+            path = (
+                original_path.replace("Metro", geography)
+                if "Metro" in original_path
+                else original_path
+            )
             if path in seen_paths:
                 continue
             if not Path(path).name.startswith(f"{geography}_"):
@@ -215,10 +271,20 @@ def latest_date_for(path: str) -> str | None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Refresh Zillow public data and plots.")
-    parser.add_argument("--skip-download", action="store_true", help="Use existing ./data instead of redownloading.")
+    parser = argparse.ArgumentParser(
+        description="Refresh Zillow public data and plots."
+    )
+    parser.add_argument(
+        "--skip-download",
+        action="store_true",
+        help="Use existing ./data instead of redownloading.",
+    )
     parser.add_argument("--skip-viz", action="store_true", help="Skip plot generation.")
-    parser.add_argument("--resume", action="store_true", help="Skip valid CSVs that already exist in ./data.")
+    parser.add_argument(
+        "--resume",
+        action="store_true",
+        help="Skip valid CSVs that already exist in ./data.",
+    )
     return parser.parse_args()
 
 
