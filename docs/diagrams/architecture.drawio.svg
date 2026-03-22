@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="50.0 40.0 630.0 350.0" width="945" height="525" font-family="Arial, sans-serif">
+<rect x="50.0" y="40.0" width="630.0" height="350.0" fill="white"/>
+<line x1="240.0" y1="100.0" x2="268.0" y2="100.0" stroke="#555" stroke-width="1.5"/><polygon points="280.0,100.0 268.0,106.0 268.0,94.0" fill="#555"/>
+<line x1="315.5" y1="130.0" x2="235.1" y2="174.2" stroke="#555" stroke-width="1.5"/><polygon points="224.5,180.0 232.2,169.0 238.0,179.5" fill="#555"/>
+<line x1="370.0" y1="130.0" x2="370.0" y2="168.0" stroke="#555" stroke-width="1.5"/><polygon points="370.0,180.0 364.0,168.0 376.0,168.0" fill="#555"/>
+<line x1="350.0" y1="240.0" x2="316.7" y2="290.0" stroke="#555" stroke-width="1.5"/><polygon points="310.0,300.0 311.7,286.7 321.6,293.3" fill="#555"/>
+<line x1="460.0" y1="118.9" x2="458.3" y2="118.6" stroke="#555" stroke-width="1.5"/><polygon points="470.0,121.1 457.0,124.5 459.5,112.7" fill="#555"/>
+<rect x="80.0" y="70.0" width="160.0" height="60.0" rx="8" ry="8" fill="#dae8fc" stroke="#6c8ebf" stroke-width="1.5"/>
+<text x="160.0" y="104.0" text-anchor="middle" font-size="11" fill="#000">doc_urls.pickle</text>
+<rect x="280.0" y="70.0" width="180.0" height="60.0" rx="8" ry="8" fill="#fff2cc" stroke="#d6b656" stroke-width="1.5"/>
+<text x="370.0" y="104.0" text-anchor="middle" font-size="11" fill="#000">refresh.py</text>
+<rect x="80.0" y="180.0" width="180.0" height="60.0" rx="8" ry="8" fill="#d5e8d4" stroke="#82b366" stroke-width="1.5"/>
+<text x="170.0" y="214.0" text-anchor="middle" font-size="11" fill="#000">data/csv corpus</text>
+<rect x="280.0" y="180.0" width="180.0" height="60.0" rx="8" ry="8" fill="#e1d5e7" stroke="#9673a6" stroke-width="1.5"/>
+<text x="370.0" y="214.0" text-anchor="middle" font-size="11" fill="#000">viz/png corpus</text>
+<rect x="190.0" y="300.0" width="200.0" height="60.0" rx="8" ry="8" fill="#ffffff" stroke="#000000" stroke-width="1.5"/>
+<text x="290.0" y="327.0" text-anchor="middle" font-size="11" fill="#000">README preview</text>
+<text x="290.0" y="341.0" text-anchor="middle" font-size="11" fill="#000">PNGs</text>
+<polygon points="470.0,124.0 484.0,110.0 650.0,110.0 650.0,170.0 470.0,170.0" fill="#ffffff" stroke="#000000" stroke-width="1.5"/><polyline points="470.0,124.0 484.0,124.0 484.0,110.0" fill="none" stroke="#000000" stroke-width="1.5"/>
+<text x="560.0" y="137.0" text-anchor="middle" font-size="11" fill="#000">Handles resume +</text>
+<text x="560.0" y="151.0" text-anchor="middle" font-size="11" fill="#000">Latin-1 fallback</text>
+</svg>
