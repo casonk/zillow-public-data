@@ -3,6 +3,16 @@ This repository mirrors Zillow’s public CSV feeds (no API key required) and
 rebuilds a few example charts so the README can illustrate how the
 timeseries evolve.
 
+## Data Sources
+
+- **Dataset catalog & downloads:** <https://www.zillow.com/research/data/>
+- **Developer API reference:** <https://www.zillowgroup.com/developers/api/public-data/real-estate-metrics/>
+- **ZHVI methodology:** <https://www.zillow.com/research/methodology-neural-zhvi-32128/>
+- **ZORI methodology:** <https://www.zillow.com/research/zori-repeat-rent-methodology-27092/>
+- **Market Heat Index methodology:** <https://www.zillow.com/research/market-heat-index-methodology-31867/>
+
+All data is free for public use with attribution to Zillow per their [Terms of Use](https://www.zillow.com/z/corp/terms/).
+
 ## Overview
 
 - `doc_urls.pickle` contains the current set of Zillow endpoints plus example
