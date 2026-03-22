@@ -28,6 +28,8 @@ jobs:
             pylint --exit-zero $FILES | tee pylint.txt
           fi
       - name: Test
+        env:
+          PYTHONPATH: .
         run: |
           if [ -d tests ] || [ -d test ]; then
             pytest -q
