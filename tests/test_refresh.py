@@ -16,7 +16,10 @@ def test_iter_candidate_paths_has_all_geographies():
     assert len(candidates) == len(
         {"Metro", "State", "County", "City", "Zip", "Neighborhood"}
     )
-    assert all("Metro" not in candidate or candidate.endswith("_month.csv") for candidate in candidates)
+    assert all(
+        "Metro" not in candidate or candidate.endswith("_month.csv")
+        for candidate in candidates
+    )
 
 
 def test_date_columns_matches_iso_dates():
