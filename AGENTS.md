@@ -40,3 +40,11 @@ of example charts that are referenced from the README.
 2. Confirm the `[summary]` and `[latest]` lines look sane.
 3. If the refresh is meant to be published, copy the five tracked root PNGs from
    `viz/` and verify the README still points at those filenames.
+
+## Agent Memory
+
+Use `./CHATHISTORY.md` as the standard local handoff file for this repo.
+
+- It is local-only and gitignored.
+- Read it after `AGENTS.md` when resuming work.
+- Keep entries concise and focused on refresh status, generated artifacts, blockers, and next steps.
