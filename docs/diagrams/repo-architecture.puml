@@ -1,0 +1,65 @@
+@startuml
+!pragma layout smetana
+title zillow-public-data Repository Architecture
+skinparam shadowing false
+skinparam defaultFontName Monospace
+skinparam packageStyle rectangle
+
+actor Contributor as contributor
+
+package "Operator + Documentation Surface" #F8FAFC {
+  rectangle "README.md" as readme #E2E8F0
+  rectangle "Root preview PNGs\nmanual publish artifacts" as preview #FDE68A
+  rectangle "AGENTS.md\nLESSONSLEARNED.md" as guidance #E2E8F0
+  rectangle "docs/ARCHITECTURE.md\ncontributor-architecture-blueprint.md" as docs #DBEAFE
+}
+
+package "Refresh Engine (refresh.py)" #F8FAFC {
+  rectangle "parse_args()\nensure_dirs()" as entry #E0F2FE
+  rectangle "load_doc_urls()\niter_candidate_paths()" as catalog #E0F2FE
+  rectangle "download_all()\nis_non_empty_csv()" as download #E0F2FE
+  rectangle "plot_all()\nmake_selections()\ndate_columns()" as plotting #E0F2FE
+  rectangle "latest_date_for()\nsummary + latest lines" as reporting #E0F2FE
+}
+
+package "Repository State" #F8FAFC {
+  rectangle "doc_urls.pickle" as map #FCE7F3
+  rectangle "data/\nmirrored Zillow CSV corpus" as data #DCFCE7
+  rectangle "viz/\nfull rendered PNG corpus" as viz #DCFCE7
+}
+
+package "Verification + Diagrams" #F8FAFC {
+  rectangle "tests/test_refresh.py" as tests #FCE7F3
+  rectangle ".github/workflows/ci.yml" as workflows #DCFCE7
+  rectangle "docs/diagrams/repo-architecture.puml\nrepo-architecture.drawio" as diagram_sources #FCE7F3
+}
+
+contributor --> readme
+contributor --> guidance
+guidance --> docs
+docs --> diagram_sources
+readme --> preview
+preview <-- viz : curated copy
+
+contributor --> entry
+entry --> catalog
+catalog --> map
+catalog --> download
+download --> data
+data --> plotting
+plotting --> viz
+data --> reporting
+reporting --> readme : freshness context
+
+tests ..> catalog
+tests ..> plotting
+workflows --> tests
+diagram_sources --> entry
+diagram_sources --> data
+diagram_sources --> viz
+
+note right of preview
+  Published manually after reviewing viz/.
+  The automatic pipeline stops at viz/.
+end note
+@enduml

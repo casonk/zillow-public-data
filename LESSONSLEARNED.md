@@ -12,4 +12,11 @@ Unlike `CHATHISTORY.md`, this file should keep only reusable lessons that should
 
 ## Lessons
 
-- No durable lessons recorded yet.
+### 2026-03-27 — Keep the automatic refresh pipeline separate from the manual README publish step
+
+- `refresh.py` owns catalog expansion, CSV download, validation, plot generation,
+  and freshness reporting.
+- The repo-root README PNGs are curated publish artifacts copied from `viz/`
+  only when an operator intends to refresh the public examples.
+- Architecture docs and diagrams should not imply that `refresh.py`
+  automatically overwrites those tracked root PNGs.

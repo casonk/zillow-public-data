@@ -16,13 +16,13 @@ of example charts that are referenced from the README.
 ## Repo Layout
 
 - `doc_urls.pickle`: cached Zillow dataset path map used to build download URLs.
-- `refresh.py`: canonical batch workflow for downloading data and regenerating
-  plots.
+- `refresh.py`: canonical batch workflow for catalog expansion, download,
+  validation, plot generation, and freshness reporting.
 - `data/`: full downloaded Zillow CSV corpus. Generated output, large, and kept
   out of git.
 - `viz/`: full regenerated plot set. Generated output, kept out of git.
 - Root `*.png`: curated sample charts that should stay in sync with the latest
-  analytics run because the README embeds them directly.
+  published refresh because the README embeds them directly.
 
 ## Working Rules
 
@@ -31,14 +31,19 @@ of example charts that are referenced from the README.
 - Expect many 404s. Zillow does not publish every dataset for every geography.
 - Do not commit `data/` or `viz/` unless the user explicitly asks for large
   generated artifacts and confirms the storage plan.
-- When publishing a refresh, update the tracked root PNGs from `viz/` so the
-  README examples reflect the current data.
+- Treat the tracked root PNGs as a manual publish step. `refresh.py` regenerates
+  `viz/`, then an operator copies the curated README examples from `viz/` to the
+  repo root when publishing a refresh.
+- Keep `docs/ARCHITECTURE.md` and `docs/diagrams/` explicit about that boundary:
+  the automated pipeline stops at `viz/`.
 
 ## Validation
 
-1. Run `python refresh.py --resume`.
-2. Confirm the `[summary]` and `[latest]` lines look sane.
-3. If the refresh is meant to be published, copy the five tracked root PNGs from
+1. Run `pytest tests/test_refresh.py` after changing catalog, candidate-path, or
+   date-column logic.
+2. Run `python refresh.py --resume`.
+3. Confirm the `[summary]` and `[latest]` lines look sane.
+4. If the refresh is meant to be published, copy the five tracked root PNGs from
    `viz/` and verify the README still points at those filenames.
 
 ## Portfolio Standards Reference
@@ -51,12 +56,12 @@ Start with:
 - `./util-repos/traction-control/LESSONSLEARNED.md`
 
 Shared implementation repos available portfolio-wide:
-- `./util-repos/archility` for architecture inventory, blueprint scaffolding, and architecture-documentation drift checks
+- `./util-repos/archility` for architecture toolchain bootstrap/render orchestration, Graphviz-capable diagram support, deterministic starter scaffolding, agentic architecture authoring, and architecture-documentation drift checks
 - `./util-repos/auto-pass` for KeePassXC-backed password management and secret retrieval/update flows
 - `./util-repos/nordility` for NordVPN-based VPN switching and connection orchestration
 - `./util-repos/shock-relay` for external messaging across supported providers such as Signal, Telegram, Twilio SMS, WhatsApp, and Gmail IMAP
 
-When another repo needs architecture inventory/scaffolding, password management, VPN switching, or external messaging, prefer integrating with these repos instead of re-implementing the capability locally.
+When another repo needs architecture toolchain bootstrap/rendering, architecture inventory/scaffolding, password management, VPN switching, or external messaging, prefer integrating with these repos instead of re-implementing the capability locally.
 
 ## Agent Memory
 

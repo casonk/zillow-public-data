@@ -1,30 +1,76 @@
 @startuml
+!pragma layout smetana
 skinparam monochrome true
 skinparam dpi 150
+skinparam shadowing false
+title zillow-public-data Refresh Pipeline
 
-package "Catalog" {
+actor Operator as operator
+
+package "Operator Surface" {
+  [CLI Flags\n--resume\n--skip-download\n--skip-viz] as flags
+}
+
+package "Catalog Expansion" {
   [doc_urls.pickle] as doc
-}
-package "Downloader" {
-  [Refresh Script] as entry
-}
-package "Output" {
-  [data/csv corpus]
-  [viz/png corpus]
-}
-package "Expo" {
-  [README preview PNGs]
+  [load_doc_urls()] as load
+  [iter_candidate_paths()] as iter
 }
 
-doc --> entry : reads candidate file map
-entry --> "files.zillowstatic.com" : fetch CSVs
-entry --> "data/csv corpus" : writes sanitized CSVs
-entry --> "viz/png corpus" : renders filtered charts
-"viz/png corpus" --> "README preview PNGs" : copy curated samples
+package "Download + Validation" {
+  [download_all()] as download
+  [PUBLIC_BASES\npublic_csvs + public_v2] as bases
+  [is_non_empty_csv()] as validate
+  database "data/\nCSV corpus" as data
+}
 
-note right of entry
-  Handles resume, latin-1 fallback,
-  and non-numeric tables.
+package "Plot Generation" {
+  [make_selections()] as selections
+  [date_columns()] as dates
+  [plot_all()] as plots
+  folder "viz/\nFull PNG corpus" as viz
+}
+
+package "Reporting + Publish" {
+  [latest_date_for()] as latest
+  [stdout\nsummary + latest lines] as summaries
+  [README preview PNGs\nmanual publish] as preview
+}
+
+package "Regression Checks" {
+  [tests/test_refresh.py] as tests
+}
+
+operator --> flags
+flags --> load
+load --> doc
+load --> iter
+iter --> download
+bases --> download : fetches candidate CSVs
+download --> validate
+validate --> data
+data --> plots
+selections --> plots
+dates --> plots
+plots --> viz
+data --> latest
+latest --> summaries
+viz --> preview : operator-curated copy
+
+tests ..> load
+tests ..> iter
+tests ..> dates
+
+note right of download
+  Resume mode skips valid files.
+  Empty CSVs are deleted.
+  Latin-1 fallback happens on read.
+end note
+
+note right of preview
+  The repo-root README PNGs are not
+  overwritten by refresh.py itself.
+  Publish them intentionally from viz/.
 end note
 
 @enduml
