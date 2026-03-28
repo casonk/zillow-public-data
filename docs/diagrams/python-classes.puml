@@ -1,0 +1,10 @@
+@startuml classes_zillow-public-data
+set namespaceSeparator none
+class "DownloadStats" as refresh.DownloadStats {
+  downloaded : int
+  empty : int
+  failed : int
+  missing : int
+  skipped : int
+}
+@enduml
