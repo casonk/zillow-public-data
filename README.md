@@ -17,12 +17,15 @@ All data is free for public use with attribution to Zillow per their [Terms of U
 
 - `doc_urls.pickle` contains the current set of Zillow endpoints plus example
   geographies so the refresh workflow knows which CSVs to request.
-- `refresh.py` is the canonical command for downloading the data, filtering out
-  unsupported geography combinations, regenerating the example PNGs, and
-  reporting the newest available month for a handful of reference series.
+- `refresh.py` is the canonical operator entrypoint. It loads the catalog,
+  expands geography-specific candidate paths, downloads or resumes CSVs into
+  `data/`, regenerates the full chart corpus into `viz/`, and reports the
+  newest available month for a few reference datasets.
 - `data/` holds the downloaded CSV corpus; `viz/` contains the full regenerated
   chart set, while the README keeps a curated subset of those PNGs checked in
-  so the visual preview stays up to date.
+  at the repo root for publication.
+- `tests/test_refresh.py` is the lightweight regression surface for catalog
+  loading, geography expansion, and date-column detection.
 - See `docs/ARCHITECTURE.md` for a concise diagram and description of the
   download → plot workflow.
 
@@ -44,8 +47,9 @@ download step without generating any charts.
 
 ## Visual preview
 
-These PNGs are published in the README as examples and are overwritten when you
-regenerate `./viz/`:
+These PNGs are published in the README as examples. `refresh.py` regenerates the
+full `./viz/` corpus, then a publish-intended refresh manually copies the
+curated subset below from `viz/` to the repo root:
 
 ![City_invt_fs_uc_sfr_month.csv.png](./City_invt_fs_uc_sfr_month.csv.png)
 ![County_mean_doz_pending_uc_sfrcondo_sm_month.csv.png](./County_mean_doz_pending_uc_sfrcondo_sm_month.csv.png)
@@ -55,14 +59,16 @@ regenerate `./viz/`:
 
 ## Directory layout
 
-- `refresh.py`: orchestrates the full flow (download + viz generation + summaries +
-  architecture logging).
+- `refresh.py`: orchestrates the full flow (catalog load + candidate expansion +
+  download + viz generation + freshness summaries).
 - `doc_urls.pickle`: Zillow endpoint map used by `refresh.py`.
 - `data/`: large downloaded CSVs (`zhvi/`, `median_sale_price/`, etc.).
 - `viz/`: generated charts for all region/dataset combinations.
-- Root PNGs: curated subset kept in sync with the README.
+- Root PNGs: curated subset manually published from `viz/` for the README.
+- `tests/test_refresh.py`: offline checks around `load_doc_urls`,
+  `iter_candidate_paths`, and date-column discovery.
 - `docs/ARCHITECTURE.md`: high-level architecture sketch describing how the
-  inputs move through `refresh.py`.
+  inputs move through `refresh.py` and where the manual publish step begins.
 
 ## Troubleshooting
 
@@ -70,8 +76,9 @@ regenerate `./viz/`:
   skip missing geographies and record what was unavailable.
 - If `refresh.py` errors while reading a CSV, the logs now try Latin-1 as a
   fallback and skip non-numeric outputs automatically.
-- When the README pixels still look stale, re-run `python refresh.py --skip-download
-  --skip-viz` to reconfirm the sampled charts reflect the latest `./data/`.
+- When the README pixels still look stale, rerun `python refresh.py --skip-download`
+  so `viz/` is rebuilt from the current `data/`, then manually copy the curated
+  PNGs you want to publish from `viz/` to the repo root.
 
 ## Tests
 

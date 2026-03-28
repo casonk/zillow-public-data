@@ -1,9 +1,8 @@
 # Contributor Architecture
 
-This document traces the download → validation → visualization path that
-`refresh.py` implements. The idea mirrors the style used in
-`personal-finance/docs/contributor-architecture-blueprint.md`: small, focused
-sections that explain what each layer owns and how an engineer can extend it.
+This document traces the real download → validation → visualization pipeline
+implemented by `refresh.py`, then separates that runtime path from the manual
+publish step used for the README preview PNGs.
 
 ## Visual diagrams
 
@@ -13,6 +12,9 @@ sections that explain what each layer owns and how an engineer can extend it.
 - `docs/diagrams/architecture.drawio`: Draw.io project (zipped XML). Open it in
   `https://app.diagrams.net` or `drawio` desktop to make tweaks, and export
   artwork as needed for other documentation.
+- `docs/diagrams/repo-architecture.puml` and
+  `docs/diagrams/repo-architecture.drawio`: portfolio-standard architecture
+  sources kept in sync with the same workflow.
 
 With both sources in place, contributors can edit whichever tool they prefer
 and use the matching renderer to keep the pictures aligned with the text.
@@ -23,16 +25,23 @@ and use the matching renderer to keep the pictures aligned with the text.
   file paths. Each path includes a geography token (`Metro`, `State`, etc.) so
   the script can re-stitch every supported geography without hard-coding URLs.
 - `refresh.py`: the central workflow. It:
-  1. iterates the candidate CSV paths derived from `doc_urls.pickle`,
-  2. downloads them from `files.zillowstatic.com` (with a mirror fallback),
-  3. validates each CSV (non-empty, UTF-8/Latin-1), and
-  4. regenerates the plots in `./viz/`, skipping tables with no numeric data.
+  1. parses operator flags and ensures `data/` / `viz/` exist,
+  2. loads `doc_urls.pickle` and expands geography-specific candidates through
+     `iter_candidate_paths`,
+  3. downloads CSVs from Zillow's `public_csvs` / `public_v2` mirrors through
+     `download_all`,
+  4. deletes empty CSVs and keeps resume-safe files through `is_non_empty_csv`,
+  5. regenerates plots through `plot_all`, `make_selections`, and
+     `date_columns`, and
+  6. reports sample freshness with `latest_date_for`.
 - `data/`: final download output grouped by topic (`zhvi/`, `median_sale_price/`,
   `invt_fs/`, etc.).
-- `viz/`: every generated PNG, one per dataset/geography (used to update the
-  tracked README images).
-- Root PNGs: curated visuals mentioned in this README so the homepage reflects
-  the latest data.
+- `viz/`: every generated PNG, one per dataset/geography. This is the full local
+  render corpus.
+- Root PNGs: curated README visuals copied from `viz/` only when an operator is
+  intentionally publishing new examples.
+- `tests/test_refresh.py`: fast offline checks for catalog loading, candidate
+  expansion, and date-column detection.
 
 ## Data Flow
 
@@ -47,8 +56,10 @@ and use the matching renderer to keep the pictures aligned with the text.
    script regenerates all plots from `./data/`. Each chart is filtered to the
    configured region list (Metro, ZIP, City, etc.), numeric columns are
    coerced, and rows/columns that remain empty are dropped before plotting.
-5. The tracked root PNGs in the README are overwritten at the end of the run so
-   visitors always see samples generated from the current CSV corpus.
+5. The command prints `[summary]` counters plus a few `[latest]` timestamps so
+   the operator can verify what was refreshed.
+6. If the refresh is meant to update the README, the operator manually copies a
+   curated subset of PNGs from `viz/` to the repo root after reviewing them.
 
 ## Operations
 
@@ -59,5 +70,8 @@ and use the matching renderer to keep the pictures aligned with the text.
 - Rerun `python refresh.py --skip-download --skip-viz` if you want to verify the
   latest `data/` contents without touching either downloads or plots, e.g.,
   after manual edits.
-- The README images, `AGENTS.md`, and `docs/ARCHITECTURE.md` together document
-  the workflow so future contributors can see how the pieces fit.
+- Run `pytest tests/test_refresh.py` after changing the catalog-expansion or
+  date-detection logic.
+- The README images, `AGENTS.md`, `docs/ARCHITECTURE.md`, and the standard
+  `repo-architecture.*` diagrams should all continue to describe the same split
+  between the automatic pipeline and the manual README publish step.
