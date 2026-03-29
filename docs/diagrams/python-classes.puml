@@ -7,4 +7,9 @@ class "DownloadStats" as refresh.DownloadStats {
   missing : int
   skipped : int
 }
+note as archilityPythonSurfaceNote
+Minimal class surface detected.
+Scanned 1 Python module.
+See python-import-deps-refresh.svg for module-level imports.
+end note
 @enduml
