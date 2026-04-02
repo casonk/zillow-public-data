@@ -19,6 +19,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install black pylint pytest
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+          pip install git+https://github.com/casonk/dyno-lab.git
       - name: Check formatting
         run: black --check --diff .
       - name: Lint
