@@ -1,9 +1,19 @@
 [tool.black]
-line-length = 88
+line-length = 100
 target-version = ["py310"]
 
 [tool.ruff]
-line-length = 88
+line-length = 100
+target-version = "py310"
+exclude = ["*.ipynb"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+ignore = [
+    "E501",   # line-too-long — handled by formatter
+    "B008",   # function-call in default args — too noisy for existing code
+    "SIM108", # ternary instead of if/else — too aggressive for readability
+]
 
 [tool.ruff.format]
 quote-style = "double"
