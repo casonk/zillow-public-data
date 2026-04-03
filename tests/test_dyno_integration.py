@@ -7,20 +7,18 @@ defaults, and download_all with a mocked HTTP session.
 
 from __future__ import annotations
 
-import pytest
-from pathlib import Path
 from unittest.mock import patch
 
+import pytest
 from dyno_lab.fs import TempWorkdir
-from dyno_lab.http import SequenceSession, StaticSession
 
 from refresh import (
     DATE_RE,
     GEOGRAPHIES,
     DownloadStats,
+    download_all,
     is_non_empty_csv,
     iter_candidate_paths,
-    download_all,
 )
 
 # ── is_non_empty_csv with TempWorkdir ─────────────────────────────────────
@@ -49,7 +47,7 @@ def test_is_non_empty_csv_missing_file():
     with TempWorkdir() as wd:
         missing = wd.path / "does_not_exist.csv"
         # pandas raises FileNotFoundError which propagates (not EmptyDataError)
-        with pytest.raises(Exception):
+        with pytest.raises(FileNotFoundError):
             is_non_empty_csv(missing)
 
 
@@ -61,9 +59,7 @@ def test_date_re_valid(date):
     assert DATE_RE.match(date) is not None
 
 
-@pytest.mark.parametrize(
-    "bad", ["2024/01/01", "01-01-2024", "2024-1-1", "not-a-date", ""]
-)
+@pytest.mark.parametrize("bad", ["2024/01/01", "01-01-2024", "2024-1-1", "not-a-date", ""])
 def test_date_re_invalid(bad):
     assert DATE_RE.match(bad) is None
 
@@ -154,9 +150,8 @@ def test_download_all_increments_downloaded_on_200():
     session = _ByteSession(csv_content, status_code=200)
     doc_urls = {"zhvi": "Metro_zhvi_uc_sfr_month.csv"}
 
-    with TempWorkdir() as wd:
-        with patch("refresh.DATA_DIR", wd.path):
-            stats = download_all(doc_urls, session, resume=False)
+    with TempWorkdir() as wd, patch("refresh.DATA_DIR", wd.path):
+        stats = download_all(doc_urls, session, resume=False)
 
     assert stats.downloaded == len(GEOGRAPHIES)
     assert stats.failed == 0
@@ -183,9 +178,8 @@ def test_download_all_404_increments_missing():
     session = _ByteSession(b"", status_code=404)
     doc_urls = {"city": "City_data.csv"}
 
-    with TempWorkdir() as wd:
-        with patch("refresh.DATA_DIR", wd.path):
-            stats = download_all(doc_urls, session, resume=False)
+    with TempWorkdir() as wd, patch("refresh.DATA_DIR", wd.path):
+        stats = download_all(doc_urls, session, resume=False)
 
     assert stats.missing == 1
     assert stats.downloaded == 0

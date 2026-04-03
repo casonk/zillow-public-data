@@ -1,5 +1,4 @@
 import pandas as pd
-import pytest
 
 from refresh import DATE_RE, iter_candidate_paths, load_doc_urls
 
@@ -13,12 +12,9 @@ def test_load_doc_urls_not_empty():
 def test_iter_candidate_paths_has_all_geographies():
     doc_urls = {"example": "zhvi/Metro_zhvi_uc_sfr_month.csv"}
     candidates = list(iter_candidate_paths(doc_urls))
-    assert len(candidates) == len(
-        {"Metro", "State", "County", "City", "Zip", "Neighborhood"}
-    )
+    assert len(candidates) == len({"Metro", "State", "County", "City", "Zip", "Neighborhood"})
     assert all(
-        "Metro" not in candidate or candidate.endswith("_month.csv")
-        for candidate in candidates
+        "Metro" not in candidate or candidate.endswith("_month.csv") for candidate in candidates
     )
 
 

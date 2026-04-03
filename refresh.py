@@ -3,9 +3,9 @@ import os
 import pickle
 import re
 import sys
+from collections.abc import Iterable
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
 
 import pandas as pd
 import requests
@@ -271,9 +271,7 @@ def latest_date_for(path: str) -> str | None:
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(
-        description="Refresh Zillow public data and plots."
-    )
+    parser = argparse.ArgumentParser(description="Refresh Zillow public data and plots.")
     parser.add_argument(
         "--skip-download",
         action="store_true",
