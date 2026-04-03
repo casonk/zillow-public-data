@@ -167,3 +167,4 @@ cython_debug/
 
 # Local agent handoff log
 CHATHISTORY.md
+.codex
