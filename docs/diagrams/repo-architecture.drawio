@@ -34,18 +34,15 @@
         </mxCell>
         <mxCell id="500" style="rounded=0;html=0;strokeColor=#1F2937;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=12;endArrow=classic;endFill=1;endSize=10;strokeWidth=2;jumpStyle=arc;jumpSize=10;" edge="1" parent="1" source="10" target="20">
           <mxGeometry relative="1" as="geometry" archilityManagedRoute="1">
-            <Array as="points">
-              <mxPoint x="344" y="195" />
-              <mxPoint x="344" y="187" />
-              <mxPoint x="336" y="187" />
-              <mxPoint x="336" y="205" />
-            </Array>
+            <Array as="points" />
           </mxGeometry>
         </mxCell>
         <mxCell id="501" style="rounded=0;html=0;strokeColor=#1F2937;edgeStyle=orthogonalEdgeStyle;orthogonalLoop=1;jettySize=12;endArrow=classic;endFill=1;endSize=10;strokeWidth=2;jumpStyle=arc;jumpSize=10;" edge="1" parent="1" source="20" target="30">
           <mxGeometry relative="1" as="geometry" archilityManagedRoute="1">
             <Array as="points">
               <mxPoint x="714" y="205" />
+              <mxPoint x="714" y="170" />
+              <mxPoint x="736" y="170" />
               <mxPoint x="736" y="205" />
             </Array>
           </mxGeometry>
@@ -54,8 +51,8 @@
           <mxGeometry relative="1" as="geometry" archilityManagedRoute="1">
             <Array as="points">
               <mxPoint x="1144" y="205" />
-              <mxPoint x="1144" y="223" />
-              <mxPoint x="1146" y="223" />
+              <mxPoint x="1144" y="240" />
+              <mxPoint x="1146" y="240" />
               <mxPoint x="1146" y="205" />
             </Array>
           </mxGeometry>
@@ -74,8 +71,8 @@
           <mxGeometry relative="1" as="geometry" archilityManagedRoute="1">
             <Array as="points">
               <mxPoint x="1350" y="304" />
-              <mxPoint x="1089" y="304" />
-              <mxPoint x="1089" y="336" />
+              <mxPoint x="949" y="304" />
+              <mxPoint x="949" y="336" />
               <mxPoint x="1080" y="336" />
             </Array>
           </mxGeometry>
@@ -84,8 +81,6 @@
           <mxGeometry relative="1" as="geometry" archilityManagedRoute="1">
             <Array as="points">
               <mxPoint x="736" y="425" />
-              <mxPoint x="736" y="416" />
-              <mxPoint x="684" y="416" />
               <mxPoint x="684" y="425" />
             </Array>
           </mxGeometry>
@@ -94,8 +89,8 @@
           <mxGeometry relative="1" as="geometry" archilityManagedRoute="1">
             <Array as="points">
               <mxPoint x="1210" y="336" />
-              <mxPoint x="1146" y="336" />
-              <mxPoint x="1146" y="294" />
+              <mxPoint x="1138" y="336" />
+              <mxPoint x="1138" y="294" />
               <mxPoint x="940" y="294" />
             </Array>
           </mxGeometry>
@@ -104,7 +99,7 @@
           <mxGeometry relative="1" as="geometry" archilityManagedRoute="1">
             <Array as="points">
               <mxPoint x="1490" y="336" />
-              <mxPoint x="1490" y="304" />
+              <mxPoint x="1350" y="336" />
               <mxPoint x="1350" y="304" />
             </Array>
           </mxGeometry>
@@ -113,8 +108,8 @@
           <mxGeometry relative="1" as="geometry" archilityManagedRoute="1">
             <Array as="points">
               <mxPoint x="1146" y="400" />
-              <mxPoint x="1146" y="434" />
-              <mxPoint x="1144" y="434" />
+              <mxPoint x="1146" y="460" />
+              <mxPoint x="1144" y="460" />
               <mxPoint x="1144" y="425" />
             </Array>
           </mxGeometry>
@@ -132,8 +127,8 @@
           <mxGeometry relative="1" as="geometry" archilityManagedRoute="1">
             <Array as="points">
               <mxPoint x="1146" y="450" />
-              <mxPoint x="1146" y="327.5" />
-              <mxPoint x="714" y="327.5" />
+              <mxPoint x="1146" y="315" />
+              <mxPoint x="714" y="315" />
               <mxPoint x="714" y="205" />
             </Array>
           </mxGeometry>

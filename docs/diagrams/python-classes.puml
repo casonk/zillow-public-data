@@ -9,7 +9,7 @@ class "DownloadStats" as refresh.DownloadStats {
 }
 note as archilityPythonSurfaceNote
 Minimal class surface detected.
-Scanned 1 Python module.
-See python-import-deps-refresh.svg for module-level imports.
+Scanned 2 Python modules.
+See python-import-deps-conftest.svg, python-import-deps-refresh.svg for module-level imports.
 end note
 @enduml

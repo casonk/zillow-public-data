@@ -1,0 +1,7 @@
+@startuml packages_zillow-public-data
+set namespaceSeparator none
+top to bottom direction
+skinparam componentStyle rectangle
+rectangle "conftest\n1 python file" as conftest
+rectangle "refresh\n1 python file" as refresh
+@enduml
