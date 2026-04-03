@@ -4,6 +4,7 @@ Tests cover: is_non_empty_csv (TempWorkdir), DATE_RE pattern matching,
 iter_candidate_paths geography expansion and deduplication, DownloadStats
 defaults, and download_all with a mocked HTTP session.
 """
+
 from __future__ import annotations
 
 import pytest
@@ -22,8 +23,8 @@ from refresh import (
     download_all,
 )
 
-
 # ── is_non_empty_csv with TempWorkdir ─────────────────────────────────────
+
 
 def test_is_non_empty_csv_valid():
     with TempWorkdir() as wd:
@@ -54,17 +55,21 @@ def test_is_non_empty_csv_missing_file():
 
 # ── DATE_RE pattern matching ───────────────────────────────────────────────
 
+
 @pytest.mark.parametrize("date", ["2024-01-01", "2025-12-31", "2000-06-15"])
 def test_date_re_valid(date):
     assert DATE_RE.match(date) is not None
 
 
-@pytest.mark.parametrize("bad", ["2024/01/01", "01-01-2024", "2024-1-1", "not-a-date", ""])
+@pytest.mark.parametrize(
+    "bad", ["2024/01/01", "01-01-2024", "2024-1-1", "not-a-date", ""]
+)
 def test_date_re_invalid(bad):
     assert DATE_RE.match(bad) is None
 
 
 # ── iter_candidate_paths ──────────────────────────────────────────────────
+
 
 def test_iter_candidate_paths_all_six_geographies():
     doc_urls = {"zhvi": "zhvi/Metro_zhvi_uc_sfr_month.csv"}
@@ -103,6 +108,7 @@ def test_iter_candidate_paths_mixed_metro_and_plain():
 
 # ── DownloadStats fields and defaults ─────────────────────────────────────
 
+
 def test_download_stats_defaults():
     stats = DownloadStats()
     assert stats.downloaded == 0
@@ -121,6 +127,7 @@ def test_download_stats_mutation():
 
 
 # ── download_all with mocked HTTP ─────────────────────────────────────────
+
 
 class _ByteSession:
     """Thin session mock that returns bytes-capable responses for download_all."""
