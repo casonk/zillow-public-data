@@ -46,6 +46,17 @@ of example charts that are referenced from the README.
 4. If the refresh is meant to be published, copy the five tracked root PNGs from
    `viz/` and verify the README still points at those filenames.
 
+## Local CI Verification
+
+Run before every push:
+
+```bash
+pre-commit run --all-files
+pytest -q
+```
+
+Do not push changes that have not passed all checks locally.
+
 ## Portfolio Standards Reference
 
 For portfolio-wide repository standards and baseline conventions, consult the control-plane repo at `./util-repos/traction-control` from the portfolio root.
