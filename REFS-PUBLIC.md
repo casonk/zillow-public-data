@@ -1,4 +1,4 @@
-# REFS-PUBLIC.md — Public References
+# REFS-PUBLIC.md - Public References
 
 > Record external public repositories, datasets, documentation, APIs, or other
 > public resources that this repository utilizes or depends on.
@@ -6,22 +6,20 @@
 
 ## Public Repositories
 
-<!-- External repos this project depends on, forks, or integrates with:
-- https://github.com/org/repo — description of usage
--->
+- No fixed external code repository is the main upstream; the repo mirrors Zillow public data feeds.
 
 ## Public Datasets and APIs
 
-<!-- Publicly accessible data sources, REST APIs, or external feeds consumed here:
-- https://example.com/dataset — description of usage
--->
+- https://www.zillow.com/research/data/ - source directory for Zillow public CSV feeds
+- https://www.zillowgroup.com/developers/api/public-data/real-estate-metrics/ - Zillow public-data program reference
 
 ## Documentation and Specifications
 
-<!-- Reference docs, RFCs, standards, or upstream project documentation:
-- https://docs.example.com — description
--->
+- https://www.zillow.com/research/market-heat-index-methodology-31867/ - market heat index methodology reference
+- https://www.zillow.com/research/methodology-neural-zhvi-32128/ - Zillow Home Value Index methodology reference
+- https://www.zillow.com/research/zori-repeat-rent-methodology-27092/ - Zillow Observed Rent Index methodology reference
+- https://www.zillow.com/z/corp/terms/ - Zillow public-data terms of use
 
 ## Notes
 
-<!-- Any context about how these public references are used or versioned -->
+- The repo mirrors public CSV feeds locally rather than calling a private API. Methodology pages belong here because they explain the meaning of tracked columns and indices.
