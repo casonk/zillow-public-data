@@ -6,10 +6,12 @@ skinparam defaultFontName Monospace
 skinparam componentStyle rectangle
 skinparam linetype ortho
 rectangle ".github/workflows/ci.yml\n9 detected tools" as source_github_workflows_ci_yml #E0F2FE
+rectangle ".github/workflows/secret-scan.yml\n2 detected tools" as source_github_workflows_secret_scan_yml #E0F2FE
 rectangle "scripts/run_tachometer_profile.sh\n3 detected tools" as source_scripts_run_tachometer_profile_sh #E0F2FE
 cloud "actions/checkout" as tool_actions_checkout #FEF3C7
 cloud "actions/setup-python" as tool_actions_setup_python #FEF3C7
 cloud "black" as tool_black #FEF3C7
+cloud "gitleaks/gitleaks-action" as tool_gitleaks_gitleaks_action #FEF3C7
 cloud "ls-files" as tool_ls_files #FEF3C7
 cloud "pip" as tool_pip #FEF3C7
 cloud "pylint" as tool_pylint #FEF3C7
@@ -28,11 +30,13 @@ source_github_workflows_ci_yml --> tool_pylint
 source_github_workflows_ci_yml --> tool_pytest
 source_github_workflows_ci_yml --> tool_ruff
 source_github_workflows_ci_yml --> tool_tee
+source_github_workflows_secret_scan_yml --> tool_actions_checkout
+source_github_workflows_secret_scan_yml --> tool_gitleaks_gitleaks_action
 source_scripts_run_tachometer_profile_sh --> tool_run
 source_scripts_run_tachometer_profile_sh --> tool_summarize
 source_scripts_run_tachometer_profile_sh --> tool_tachometer
 note as toolingGraphSummary
-Scanned 2 tooling entrypoints.
-Detected 12 third-party tools.
+Scanned 3 tooling entrypoints.
+Detected 13 third-party tools.
 end note
 @enduml
