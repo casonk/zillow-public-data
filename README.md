@@ -45,6 +45,23 @@ non-numeric rows so rerunning `refresh.py` is the preferred way to keep the repo
 in sync. Use `python refresh.py --skip-viz` only when you need to verify the data
 download step without generating any charts.
 
+## Generated artifact compression
+
+`data/` and `viz/` can be archived locally when they are taking too much disk
+space. Archives live under ignored `.zillow-generated-archives/` and can be
+restored before the next refresh.
+
+```bash
+python scripts/compress_generated_artifacts.py status
+python scripts/compress_generated_artifacts.py auto
+python scripts/compress_generated_artifacts.py restore --targets data viz
+```
+
+`auto` compresses targets at or above `250 MiB` and removes the uncompressed
+directory only after the archive has been verified. Use `--keep-source` to keep
+the original directories, or `--force` after a new refresh when an existing
+archive should be replaced.
+
 ## Visual preview
 
 These PNGs are published in the README as examples. `refresh.py` regenerates the
@@ -64,6 +81,8 @@ curated subset below from `viz/` to the repo root:
 - `doc_urls.pickle`: Zillow endpoint map used by `refresh.py`.
 - `data/`: large downloaded CSVs (`zhvi/`, `median_sale_price/`, etc.).
 - `viz/`: generated charts for all region/dataset combinations.
+- `scripts/compress_generated_artifacts.py`: reversible local archiver for the
+  ignored generated `data/` and `viz/` directories.
 - Root PNGs: curated subset manually published from `viz/` for the README.
 - `tests/test_refresh.py`: offline checks around `load_doc_urls`,
   `iter_candidate_paths`, and date-column discovery.

@@ -38,6 +38,11 @@ and use the matching renderer to keep the pictures aligned with the text.
   `invt_fs/`, etc.).
 - `viz/`: every generated PNG, one per dataset/geography. This is the full local
   render corpus.
+- `.zillow-generated-archives/`: local-only `tar.gz` archives for compressed
+  copies of ignored generated output. The archive helper verifies archives
+  before pruning the uncompressed `data/` or `viz/` directory.
+- `scripts/compress_generated_artifacts.py`: operational helper for checking,
+  compressing, pruning, and restoring the ignored generated output directories.
 - Root PNGs: curated README visuals copied from `viz/` only when an operator is
   intentionally publishing new examples.
 - `tests/test_refresh.py`: fast offline checks for catalog loading, candidate
@@ -70,6 +75,10 @@ and use the matching renderer to keep the pictures aligned with the text.
 - Rerun `python refresh.py --skip-download --skip-viz` if you want to verify the
   latest `data/` contents without touching either downloads or plots, e.g.,
   after manual edits.
+- Use `python scripts/compress_generated_artifacts.py auto` to reclaim local
+  disk from generated `data/` and `viz/` outputs. Restore with
+  `python scripts/compress_generated_artifacts.py restore --targets data viz`
+  before refresh work if those directories were pruned.
 - Run `pytest tests/test_refresh.py` after changing the catalog-expansion or
   date-detection logic.
 - The README images, `AGENTS.md`, `docs/ARCHITECTURE.md`, and the standard

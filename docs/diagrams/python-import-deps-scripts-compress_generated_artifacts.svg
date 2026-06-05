@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="960" height="322" viewBox="0 0 960 322" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title subtitle">
+  <rect width="100%" height="100%" fill="#F8FAFC"/>
+  <rect x="20" y="20" width="920" height="282" rx="16" fill="#FFFFFF" stroke="#CBD5E1" stroke-width="2"/>
+  <rect x="20" y="20" width="920" height="72" rx="16" fill="#2563EB" fill-opacity="0.10" stroke="#2563EB" stroke-width="0"/>
+  <text id="title" x="40" y="62" font-family="Monospace" font-size="28" font-weight="700" fill="#0F172A">Python Import Summary</text>
+  <text id="subtitle" x="40" y="96" font-family="Monospace" font-size="18" fill="#334155">scripts/compress_generated_artifacts.py</text>
+  <text x="40" font-family="Monospace" font-size="17" fill="#0F172A" xml:space="preserve">
+    <tspan x="40" y="126">Scanned 1 Python file.</tspan>
+    <tspan x="40" y="148">pydeps produced no visible dependency graph for this target.</tspan>
+    <tspan x="40" y="170">Detected only stdlib import roots, so the graph would otherwise appear blank.</tspan>
+    <tspan x="40" y="192">Relative imports: none</tspan>
+    <tspan x="40" y="214">Stdlib imports: __future__, argparse, dataclasses, datetime, json, os, pathlib, shutil</tspan>
+    <tspan x="40" y="236">                sys, tarfile, tempfile, typing</tspan>
+    <tspan x="40" y="258">Other imports: none</tspan>
+  </text>
+</svg>

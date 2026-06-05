@@ -81,6 +81,7 @@ target/
 # Generated Zillow artifacts
 data/
 viz/
+.zillow-generated-archives/
 
 # IPython
 profile_default/

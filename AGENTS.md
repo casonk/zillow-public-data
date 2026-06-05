@@ -21,6 +21,8 @@ of example charts that are referenced from the README.
 - `data/`: full downloaded Zillow CSV corpus. Generated output, large, and kept
   out of git.
 - `viz/`: full regenerated plot set. Generated output, kept out of git.
+- `.zillow-generated-archives/`: local-only compressed archives of `data/` and
+  `viz/` created by `scripts/compress_generated_artifacts.py`; ignored by git.
 - Root `*.png`: curated sample charts that should stay in sync with the latest
   published refresh because the README embeds them directly.
 
@@ -34,6 +36,10 @@ of example charts that are referenced from the README.
 - Treat the tracked root PNGs as a manual publish step. `refresh.py` regenerates
   `viz/`, then an operator copies the curated README examples from `viz/` to the
   repo root when publishing a refresh.
+- Use `python scripts/compress_generated_artifacts.py auto` to compress the
+  ignored generated `data/` and `viz/` directories when local disk pressure
+  matters. Use `restore --targets data viz` before refresh work if the
+  uncompressed directories have been pruned.
 - Keep `docs/ARCHITECTURE.md` and `docs/diagrams/` explicit about that boundary:
   the automated pipeline stops at `viz/`.
 
@@ -41,9 +47,11 @@ of example charts that are referenced from the README.
 
 1. Run `pytest tests/test_refresh.py` after changing catalog, candidate-path, or
    date-column logic.
-2. Run `python refresh.py --resume`.
-3. Confirm the `[summary]` and `[latest]` lines look sane.
-4. If the refresh is meant to be published, copy the five tracked root PNGs from
+2. Run `pytest tests/test_compress_generated_artifacts.py` after changing local
+   archive/compression behavior.
+3. Run `python refresh.py --resume`.
+4. Confirm the `[summary]` and `[latest]` lines look sane.
+5. If the refresh is meant to be published, copy the five tracked root PNGs from
    `viz/` and verify the README still points at those filenames.
 
 ## Sudo Boundary
