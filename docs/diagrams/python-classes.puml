@@ -1,5 +1,15 @@
 @startuml classes_zillow-public-data
 set namespaceSeparator none
+class "ActionResult" as scripts.compress_generated_artifacts.ActionResult {
+  action : str
+  archive_bytes : int
+  archive_path : Path | None
+  message : str
+  source_bytes : int
+  target : str
+}
+class "<color:red>ArchiveError</color>" as scripts.compress_generated_artifacts.ArchiveError {
+}
 class "DownloadStats" as refresh.DownloadStats {
   downloaded : int
   empty : int
@@ -7,9 +17,11 @@ class "DownloadStats" as refresh.DownloadStats {
   missing : int
   skipped : int
 }
-note as archilityPythonSurfaceNote
-Minimal class surface detected.
-Scanned 2 Python modules.
-See python-import-deps-conftest.svg, python-import-deps-refresh.svg for module-level imports.
-end note
+class "TreeStats" as scripts.compress_generated_artifacts.TreeStats {
+  exists : bool
+  file_count : int
+  latest_mtime_ns : int
+  path : Path
+  total_bytes : int
+}
 @enduml

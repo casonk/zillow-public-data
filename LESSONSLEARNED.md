@@ -16,6 +16,15 @@ Unlike `CHATHISTORY.md`, this file should keep only reusable lessons that should
 - Keep local-only, private, reference-only, or generated boundaries explicit so published or runtime behavior is not confused with offline material or non-committable inputs.
 - Re-run repo-appropriate validation after changing generated artifacts, diagrams, workflows, or other CI-facing files so formatting and compatibility issues are caught before push.
 
+### 2026-05-21 — Compress ignored generated outputs through the repo-local archive helper
+
+- `data/` and `viz/` are ignored generated outputs and may be pruned locally
+  only after `scripts/compress_generated_artifacts.py` creates and verifies a
+  matching archive under `.zillow-generated-archives/`.
+- Restore archives with `python scripts/compress_generated_artifacts.py restore
+  --targets data viz` before refresh work when the uncompressed directories are
+  absent.
+
 ### 2026-03-27 — Keep the automatic refresh pipeline separate from the manual README publish step
 
 - `refresh.py` owns catalog expansion, CSV download, validation, plot generation,
