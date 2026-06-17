@@ -1,6 +1,27 @@
-[tool.black]
-line-length = 100
-target-version = ["py310"]
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zillow-public-data"
+version = "0.1.0"
+description = "Zillow dataset mirror and visualization tooling."
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [
+  { name = "Cason Konzer", email = "casonk@umich.edu" },
+]
+dependencies = [
+    "pandas>=2.0",
+    "requests>=2.28",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+    "ruff",
+    "dyno_lab @ git+https://github.com/casonk/dyno-lab.git",
+]
 
 [tool.ruff]
 line-length = 100
@@ -23,8 +44,6 @@ indent-style = "space"
 testpaths = ["tests"]
 pythonpath = ["."]
 
-[project.optional-dependencies]
-dev = [
-    "pytest>=8",
-    "dyno_lab @ git+https://github.com/casonk/dyno-lab.git",
-]
+[tool.black]
+line-length = 100
+target-version = ["py310"]
