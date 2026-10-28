@@ -6,6 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "zillow-public-data"
 version = "0.1.0"
 description = "Zillow dataset mirror and visualization tooling."
+classifiers = ["Private :: Do Not Upload"]
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
 authors = [
