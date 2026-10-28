@@ -1,4 +1,4 @@
-@startuml packages_zillow-public-data
+@startuml packages_checkout
 set namespaceSeparator none
 top to bottom direction
 skinparam componentStyle rectangle

@@ -1,4 +1,4 @@
-@startuml classes_zillow-public-data
+@startuml classes_checkout
 set namespaceSeparator none
 class "ActionResult" as scripts.compress_generated_artifacts.ActionResult {
   action : str
