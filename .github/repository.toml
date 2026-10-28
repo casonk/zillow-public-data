@@ -3,7 +3,7 @@
 
 [repository]
 # One line shown on GitHub. Keep it free of private repository names and local paths.
-description = "A simple repo which downloads Zillow's public data (no API access required!) and provides some naïve visualization"
+description = "Download and visualize Zillow public housing data with lightweight analytics and research tooling."
 
 [main_branch]
 # Direct commits and pushes to main are refused unless this is true.
