@@ -33,9 +33,9 @@ of example charts that are referenced from the README.
 - Expect many 404s. Zillow does not publish every dataset for every geography.
 - Do not commit `data/` or `viz/` unless the user explicitly asks for large
   generated artifacts and confirms the storage plan.
-- Treat the tracked root PNGs as a manual publish step. `refresh.py` regenerates
-  `viz/`, then an operator copies the curated README examples from `viz/` to the
-  repo root when publishing a refresh.
+- The tracked root PNGs and the README "Latest data" block are published by
+  `scripts/publish_readme_update.py`, which opens a pull request from a worktree of
+  `origin/main` after each refresh. Do not copy them into the checkout by hand.
 - Use `python scripts/compress_generated_artifacts.py auto` to compress the
   ignored generated `data/` and `viz/` directories when local disk pressure
   matters. Use `restore --targets data viz` before refresh work if the
