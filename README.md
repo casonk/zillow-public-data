@@ -65,14 +65,35 @@ archive should be replaced.
 ## Visual preview
 
 These PNGs are published in the README as examples. `refresh.py` regenerates the
-full `./viz/` corpus, then a publish-intended refresh manually copies the
-curated subset below from `viz/` to the repo root:
+full `./viz/` corpus; `scripts/publish_readme_update.py` then copies the curated
+subset below from `viz/` into a worktree of `origin/main`, refreshes the
+"Latest data" block from the newest CSV dates, and opens a pull request when
+anything changed (see "Publishing a refresh"):
 
 ![City_invt_fs_uc_sfr_month.csv.png](./City_invt_fs_uc_sfr_month.csv.png)
 ![County_mean_doz_pending_uc_sfrcondo_sm_month.csv.png](./County_mean_doz_pending_uc_sfrcondo_sm_month.csv.png)
 ![Metro_median_sale_price_uc_sfrcondo_sm_month.csv.png](./Metro_median_sale_price_uc_sfrcondo_sm_month.csv.png)
 ![Neighborhood_zhvi_uc_sfrcondo_tier_0.67_1.0_sm_sa_month.csv.png](./Neighborhood_zhvi_uc_sfrcondo_tier_0.67_1.0_sm_sa_month.csv.png)
 ![State_mean_sale_price_uc_sfrcondo_month.csv.png](./State_mean_sale_price_uc_sfrcondo_month.csv.png)
+
+## Latest data
+
+<!-- latest-data:start -->
+
+_Filled in by the first publish._
+
+<!-- latest-data:end -->
+
+## Publishing a refresh
+
+`python scripts/publish_readme_update.py` (add `--dry-run` to preview) builds a
+worktree of `origin/main`, copies the root PNGs the README embeds from `viz/`
+when they differ, rewrites the block between the `latest-data` markers from the
+reference datasets' newest dates, and, only if something changed, pushes
+`automation/zillow-readme-refresh` and opens a pull request. The working
+checkout is never modified, and a run with no new data is silent. The weekly
+`zillow-public-data-refresh` user service runs it after `refresh.py`
+(`ExecStartPost=` drop-in), so merging that pull request is the publish step.
 
 ## Directory layout
 
@@ -83,7 +104,10 @@ curated subset below from `viz/` to the repo root:
 - `viz/`: generated charts for all region/dataset combinations.
 - `scripts/compress_generated_artifacts.py`: reversible local archiver for the
   ignored generated `data/` and `viz/` directories.
-- Root PNGs: curated subset manually published from `viz/` for the README.
+- Root PNGs: curated subset published from `viz/` for the README by
+  `scripts/publish_readme_update.py`.
+- `scripts/publish_readme_update.py`: opens the pull request that refreshes the
+  README charts and latest-data block.
 - `tests/test_refresh.py`: offline checks around `load_doc_urls`,
   `iter_candidate_paths`, and date-column discovery.
 - `docs/ARCHITECTURE.md`: high-level architecture sketch describing how the
