@@ -1,0 +1,29 @@
+# Default-deny for the refresh, then only Zillow's public file host. Deny rules win over allows in Cilium, so the
+# explicit denies hold even if an allow is added later by mistake. The pod needs no credentials and no other host.
+apiVersion: cilium.io/v2
+kind: CiliumNetworkPolicy
+metadata:
+  name: zillow-public-data-egress
+  namespace: zillow-public-data
+spec:
+  endpointSelector:
+    matchLabels: {app: zillow-public-data-refresh}
+  ingressDeny:
+    - fromEntities: [all]
+  egressDeny:
+    - toEntities: [host, remote-node, kube-apiserver, health]
+    - toCIDR: ["169.254.0.0/16"]
+  egress:
+    - toEndpoints:
+        - matchLabels:
+            io.kubernetes.pod.namespace: kube-system
+            k8s-app: kube-dns
+      toPorts:
+        - ports: [{port: "53", protocol: ANY}]
+          rules:
+            dns:
+              - matchName: files.zillowstatic.com
+    - toFQDNs:
+        - matchName: files.zillowstatic.com
+      toPorts:
+        - ports: [{port: "443", protocol: TCP}]

@@ -175,3 +175,6 @@ CLAUDE.md
 .tachometer/
 
 /REFS-LOCAL.md
+
+# Which way this runs on this machine (deploy/deploy.sh)
+config/deploy.local.env
