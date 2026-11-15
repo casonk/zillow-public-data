@@ -25,6 +25,11 @@ dev = [
     "dyno_lab @ git+https://github.com/casonk/dyno-lab.git",
 ]
 
+[tool.setuptools]
+# A script repository: there is no package to install. Without this, setuptools' flat-layout discovery refuses
+# to guess among the top-level folders (deploy, config) and `pip install -e .` fails.
+py-modules = []
+
 [tool.ruff]
 line-length = 100
 target-version = "py310"
