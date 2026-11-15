@@ -357,7 +357,7 @@ def test_the_cronjob_is_only_a_template_that_never_schedules_itself():
 
 
 def test_the_dropin_replaces_only_execstart(tmp_path):
-    # The job guard, central-ecu, the time limit and the publish step live in other drop-ins and must keep applying.
+    # The job guard, the resource arbiter, the time limit and the publish step live in other drop-ins and must keep applying.
     text = (REPO / "deploy" / "k3s" / "systemd" / "20-k3s-run.conf").read_text()
     body = [line for line in text.splitlines() if line and not line.startswith("#")]
     keys = {line.split("=", 1)[0] for line in body if "=" in line}

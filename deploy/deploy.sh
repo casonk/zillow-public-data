@@ -99,7 +99,7 @@ case "$cmd:$mode" in
   verify:host) systemctl --user is-active --quiet "$TIMER" && echo "$TIMER is active" ;;
 
   # ---- k3s: the host timer stays (its guards, schedule and publish step); the work runs in a pod ----
-  # The weekly refresh is a heavy job: traction-control's job guard and central-ecu hold it back on a busy or hot
+  # The weekly refresh is a heavy job: traction-control's job guard and the resource arbiter hold it back on a busy or hot
   # machine, and a post-step publishes the README pull request with the host's GitHub credentials. A CronJob
   # would bypass all three, so the timer and unit keep running them and only ExecStart changes: a removable
   # drop-in makes it run the job in K3s and wait. The CronJob stays suspended and serves as the template.

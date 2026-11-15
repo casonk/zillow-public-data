@@ -1,5 +1,5 @@
 # The template for one refresh run. It is never scheduled: the host's weekly timer (with the job guard,
-# central-ecu and the README publish step) triggers each run through deploy/k3s/run-job.sh, which creates a Job
+# the resource arbiter and the README publish step) triggers each run through deploy/k3s/run-job.sh, which creates a Job
 # from this CronJob. The schedule below is Feb 31st, which never occurs, and suspend stays true.
 apiVersion: batch/v1
 kind: CronJob

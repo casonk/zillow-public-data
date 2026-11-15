@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 # handover.sh pod-on|pod-off — make the host unit run the refresh in K3s, or on the host again. No sudo.
 # pod-on installs a systemd drop-in that replaces only ExecStart (run-job.sh); the timer, the job guard,
-# central-ecu and the publish step are untouched. pod-off removes the drop-in. The CronJob stays suspended.
+# the resource arbiter and the publish step are untouched. pod-off removes the drop-in. The CronJob stays suspended.
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="$(cd "$HERE/../.." && pwd)"

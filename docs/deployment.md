@@ -65,7 +65,7 @@ held the work, so `host up` knows what to stop first.
 This is a heavy weekly job, so k3s mode differs from a plain CronJob hand-over:
 
 - **The host timer stays the trigger.** The unit keeps its job guard (no run on a hot or busy machine),
-  central-ecu, the 3 hour limit and the post-step that opens the README pull request with your GitHub credentials.
+  the resource arbiter, the 3 hour limit and the post-step that opens the README pull request with your GitHub credentials.
   A CronJob would bypass all of them.
 - **Only `ExecStart` changes.** `deploy.sh --mode k3s up` installs a drop-in (`20-k3s-run.conf`) that runs
   `deploy/k3s/run-job.sh`: it creates one Job from the suspended CronJob template, streams its log into the
