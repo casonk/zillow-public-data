@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 # run-job.sh — run one refresh in K3s and wait for it. This is what the host unit's ExecStart becomes in k3s mode
-# (a drop-in installed by handover.sh), so the timer, the job guard, central-ecu, the time limit and the README
+# (a drop-in installed by handover.sh), so the timer, the job guard, the resource arbiter, the time limit and the README
 # publish step all keep working. Exit status is the job's: 0 when it succeeded, 1 otherwise.
 set -euo pipefail
 export KUBECONFIG="${KUBECONFIG:-$HOME/.kube/k3s.yaml}"
