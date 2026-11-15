@@ -4,6 +4,7 @@
 [repository]
 # One line shown on GitHub. Keep it free of private repository names and local paths.
 description = "Download and visualize Zillow public housing data with lightweight analytics and research tooling."
+topics = ["zillow", "real-estate", "housing", "python", "public-data", "data-visualization", "pandas", "k3s"]
 
 [main_branch]
 # Direct commits and pushes to main are refused unless this is true.
