@@ -33,3 +33,12 @@ Unlike `CHATHISTORY.md`, this file should keep only reusable lessons that should
   only when an operator intends to refresh the public examples.
 - Architecture docs and diagrams should not imply that `refresh.py`
   automatically overwrites those tracked root PNGs.
+
+### 2026-11-15 — The weekly refresh in K3s
+
+- Declare every import. `matplotlib` was imported but listed nowhere, and only worked because the host's system Python
+  had it; building the image exposed it.
+- New top-level folders (`deploy/`, `config/`) break `pip install -e .` in a script-style repository unless
+  `[tool.setuptools] py-modules = []` is set.
+- The unit runs under the job guard and a publish post-step that needs host credentials. Keep the timer on the host and
+  move only the download-and-plot work into the pod.
