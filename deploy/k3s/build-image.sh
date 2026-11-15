@@ -4,7 +4,15 @@
 set -euo pipefail
 HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO="$(cd "$HERE/../.." && pwd)"
-CREW_CHIEF="${CREW_CHIEF_DIR:-$REPO/../crew-chief}"
+# crew-chief holds the registry push helper. It sits next to a util-repos repository and one level over from the
+# other categories (research-repos/, doc-repos/, ...); CREW_CHIEF_DIR overrides both.
+CREW_CHIEF="${CREW_CHIEF_DIR:-}"
+if [ -z "$CREW_CHIEF" ]; then
+  for candidate in "$REPO/../crew-chief" "$REPO/../../util-repos/crew-chief"; do
+    [ -x "$candidate/deploy/k3s/push-image.sh" ] && { CREW_CHIEF="$candidate"; break; }
+  done
+fi
+[ -x "$CREW_CHIEF/deploy/k3s/push-image.sh" ] || { echo "cannot find crew-chief's push-image.sh; set CREW_CHIEF_DIR" >&2; exit 1; }
 IMAGE="localhost/zillow-public-data:k3s"
 SOURCES=(refresh.py doc_urls.pickle requirements.txt)
 WORK="$(mktemp -d)"; trap 'rm -rf "$WORK"' EXIT

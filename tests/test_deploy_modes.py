@@ -416,3 +416,9 @@ def test_run_job_reports_the_jobs_status_and_stops_the_pod_on_failure(tmp_path):
     )
     assert done.returncode == 1 and "failed" in done.stderr
     assert "create job" in log.read_text()
+
+
+def test_the_build_finds_crew_chief_from_outside_util_repos():
+    # The scaffold assumed crew-chief sits next to the repository, which is only true under util-repos/.
+    text = (REPO / "deploy" / "k3s" / "build-image.sh").read_text()
+    assert "../../util-repos/crew-chief" in text and "CREW_CHIEF_DIR" in text
