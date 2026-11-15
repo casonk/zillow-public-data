@@ -1,0 +1,60 @@
+# The template for one refresh run. It is never scheduled: the host's weekly timer (with the job guard,
+# central-ecu and the README publish step) triggers each run through deploy/k3s/run-job.sh, which creates a Job
+# from this CronJob. The schedule below is Feb 31st, which never occurs, and suspend stays true.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: zillow-public-data-refresh
+  namespace: zillow-public-data
+spec:
+  schedule: "0 0 31 2 *"
+  suspend: true
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      backoffLimit: 0                # a failed refresh is reported by the host unit, not retried against Zillow
+      activeDeadlineSeconds: 10800   # the host unit's TimeoutStartSec (3h)
+      ttlSecondsAfterFinished: 604800
+      template:
+        metadata:
+          labels: {app: zillow-public-data-refresh}
+        spec:
+          restartPolicy: Never
+          automountServiceAccountToken: false
+          enableServiceLinks: false
+          # curl-style resolvers give up when the egress policy refuses the first search-domain variant of a name;
+          # with ndots 1 the real name is asked first.
+          dnsConfig:
+            options: [{name: ndots, value: "1"}]
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 1000     # the owner's uid: the data and viz folders are theirs
+            runAsGroup: 1000
+            # No fsGroup: on a local volume it would recursively change the group of the real files.
+            seccompProfile: {type: RuntimeDefault}
+          containers:
+            - name: refresh
+              image: localhost:5000/zillow-public-data:k3s
+              imagePullPolicy: Always
+              resources:
+                # The host unit peaked at about 4.8 GB. A low CPU request keeps a heavy job's scheduling weight
+                # low, like the host unit's CPUWeight=20.
+                requests: {cpu: 50m, memory: 1Gi}
+                limits: {memory: 8Gi}
+              securityContext:
+                allowPrivilegeEscalation: false
+                readOnlyRootFilesystem: true
+                capabilities: {drop: [ALL]}
+              volumeMounts:
+                - {name: data, mountPath: /app/data}
+                - {name: viz, mountPath: /app/viz}
+                - {name: tmp, mountPath: /tmp}
+          volumes:
+            - name: data
+              persistentVolumeClaim: {claimName: data}
+            - name: viz
+              persistentVolumeClaim: {claimName: viz}
+            - name: tmp
+              emptyDir: {sizeLimit: 256Mi}

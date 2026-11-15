@@ -1,0 +1,11 @@
+# The Zillow refresh image: the refresh script, its dataset catalog and the plotting libraries, nothing from the
+# owner's files. The owner's uid runs it because the mounted data and viz folders are theirs; no fsGroup anywhere.
+# A read-only root filesystem works: everything writable is a mount (/app/data, /app/viz, /tmp).
+FROM docker.io/library/python:3.12-slim
+WORKDIR /app
+COPY requirements.txt /app/
+RUN pip install --no-cache-dir -r requirements.txt && mkdir /app/data /app/viz
+COPY refresh.py doc_urls.pickle /app/
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1 MPLCONFIGDIR=/tmp/mplconfig-zillow
+USER 1000:1000
+ENTRYPOINT ["python3", "refresh.py"]

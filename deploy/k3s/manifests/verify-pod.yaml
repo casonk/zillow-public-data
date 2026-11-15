@@ -1,0 +1,40 @@
+# A short-lived pod with the refresh's labels, volumes and security context, for verify.sh only.
+apiVersion: v1
+kind: Pod
+metadata:
+  name: zillow-public-data-verify
+  namespace: zillow-public-data
+  labels: {app: zillow-public-data-refresh}
+spec:
+  restartPolicy: Never
+  terminationGracePeriodSeconds: 0   # its sleep ignores SIGTERM; die at once so the next run can reuse the name
+  automountServiceAccountToken: false
+  enableServiceLinks: false
+  dnsConfig:
+    options: [{name: ndots, value: "1"}]
+  activeDeadlineSeconds: 600
+  securityContext:
+    runAsNonRoot: true
+    runAsUser: 1000
+    runAsGroup: 1000
+    seccompProfile: {type: RuntimeDefault}
+  containers:
+    - name: verify
+      image: localhost:5000/zillow-public-data:k3s
+      imagePullPolicy: Always
+      command: ["sleep", "600"]
+      securityContext:
+        allowPrivilegeEscalation: false
+        readOnlyRootFilesystem: true
+        capabilities: {drop: [ALL]}
+      volumeMounts:
+        - {name: data, mountPath: /app/data}
+        - {name: viz, mountPath: /app/viz}
+        - {name: tmp, mountPath: /tmp}
+  volumes:
+    - name: data
+      persistentVolumeClaim: {claimName: data}
+    - name: viz
+      persistentVolumeClaim: {claimName: viz}
+    - name: tmp
+      emptyDir: {sizeLimit: 16Mi}

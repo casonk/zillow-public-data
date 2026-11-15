@@ -13,6 +13,7 @@ authors = [
   { name = "Cason Konzer", email = "casonk@umich.edu" },
 ]
 dependencies = [
+    "matplotlib>=3.7",
     "pandas>=2.0",
     "requests>=2.28",
 ]

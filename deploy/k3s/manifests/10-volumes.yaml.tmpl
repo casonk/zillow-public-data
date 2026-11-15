@@ -1,0 +1,56 @@
+# The host's data and viz folders as local volumes. Rendered by apply.sh, which fills the machine-specific paths
+# and node name, so no path or hostname is committed. Retain: deleting a claim never deletes the data. The sizes
+# are nominal; local volumes are not quota-limited.
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zillow-public-data-data
+spec:
+  capacity: {storage: 50Gi}
+  accessModes: [ReadWriteOnce]
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-host
+  volumeMode: Filesystem
+  claimRef: {namespace: zillow-public-data, name: data}
+  local: {path: "__DATA_DIR__"}
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - {key: kubernetes.io/hostname, operator: In, values: ["__NODE__"]}
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: zillow-public-data-viz
+spec:
+  capacity: {storage: 5Gi}
+  accessModes: [ReadWriteOnce]
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: local-host
+  volumeMode: Filesystem
+  claimRef: {namespace: zillow-public-data, name: viz}
+  local: {path: "__VIZ_DIR__"}
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - {key: kubernetes.io/hostname, operator: In, values: ["__NODE__"]}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: {name: data, namespace: zillow-public-data}
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: local-host
+  volumeName: zillow-public-data-data
+  resources: {requests: {storage: 50Gi}}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata: {name: viz, namespace: zillow-public-data}
+spec:
+  accessModes: [ReadWriteOnce]
+  storageClassName: local-host
+  volumeName: zillow-public-data-viz
+  resources: {requests: {storage: 5Gi}}
