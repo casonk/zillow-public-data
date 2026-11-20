@@ -7,7 +7,7 @@ name = "zillow-public-data"
 version = "0.1.0"
 description = "Zillow dataset mirror and visualization tooling."
 classifiers = ["Private :: Do Not Upload"]
-requires-python = ">=3.10"
+requires-python = ">=3.11"
 license = { text = "Apache-2.0" }
 authors = [
   { name = "Cason Konzer", email = "casonk@umich.edu" },
@@ -32,7 +32,7 @@ py-modules = []
 
 [tool.ruff]
 line-length = 100
-target-version = "py310"
+target-version = "py311"
 exclude = ["*.ipynb"]
 
 [tool.ruff.lint]
@@ -53,4 +53,4 @@ pythonpath = ["."]
 
 [tool.black]
 line-length = 100
-target-version = ["py310"]
+target-version = ["py311"]
