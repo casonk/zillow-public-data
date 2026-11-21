@@ -94,9 +94,9 @@ anything changed (see "Publishing a refresh"):
 
 | Dataset | Newest month |
 |---|---|
-| `invt_fs/City_invt_fs_uc_sfr_month.csv` | 2026-09-30 |
-| `median_sale_price/Metro_median_sale_price_uc_sfrcondo_sm_month.csv` | 2026-08-31 |
-| `zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv` | 2026-09-30 |
+| `invt_fs/City_invt_fs_uc_sfr_month.csv` | 2026-10-31 |
+| `median_sale_price/Metro_median_sale_price_uc_sfrcondo_sm_month.csv` | 2026-09-30 |
+| `zhvi/Metro_zhvi_uc_sfrcondo_tier_0.33_0.67_sm_sa_month.csv` | 2026-10-31 |
 
 <!-- latest-data:end -->
 
